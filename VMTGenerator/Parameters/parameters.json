@@ -1,0 +1,16 @@
+[
+	"$alphatest", 
+    "$translucent", 
+    "$model", 
+    "$nocull", 
+    "$nodecal", 
+    "$halflambert", 
+    "$ignorez", 
+    "$vertexalpha", 
+    "$vertexcolor", 
+    "$nofog", 
+    "$no_draw", 
+    "$no_fullbright", 
+    "$additive", 
+    "$selfillum"
+]

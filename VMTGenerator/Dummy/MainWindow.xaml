@@ -1,0 +1,116 @@
+﻿<Window x:Class="MassVMTGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MassVMTGenerator"
+        mc:Ignorable="d"
+        Title="Moltard's Mass VMT Generator"  Height="500" Width="800" Icon="icon.ico">
+
+    <Border Name="App_Background" Padding="2" Background="LightGray">
+
+        <StackPanel>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="Parameters" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                    <ScrollViewer Margin="5" Height="220">
+                        <StackPanel Name="Parameters_CheckBox">
+                        </StackPanel>
+                    </ScrollViewer>
+                    <TextBlock Margin="3" Padding="5" Text="Log" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
+                    <TextBox Name="Log_Box" Background="White" Margin="10 2" Height="120" FontSize="9" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="8*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="Texture Shader" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                            <ComboBox Margin="10 10" Name="ShaderSelectBox" Grid.Column="1">
+                                <ComboBoxItem>---</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="SurfaceProp" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                            <ComboBox Margin="10 10" Name="SurfacePropSelectBox" Grid.Column="1">
+                                <ComboBoxItem>---</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="BaseTexture Path" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                        <TextBox Margin="5 5 10 5" Name="BaseTexture_TextBox" VerticalContentAlignment="Center"  Grid.Column="1"></TextBox>
+                    </Grid>
+
+                    <Grid Margin="0 10 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="9*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" >
+                            <TextBlock Margin="5 2" Padding="5" TextWrapping="Wrap" Text="VTF Files" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                            <ListBox Margin="10 2" Background="White" Height="300" Name="Vtf_ListBox" SelectionMode="Extended" SelectionChanged="Vtf_ListBox_SelectionChanged">
+                            </ListBox>
+
+                            <Grid  Margin="10 8 10 8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Padding="10 1" HorizontalAlignment="Right" Click="BrowseButton_Click">Browse</Button>
+                                <CheckBox Grid.Column="1" Margin="2 0" HorizontalAlignment="Center" Name="Browse_SelectAll" VerticalAlignment="Center" ToolTip="Select All VTFs" IsEnabled="False" Checked="Browse_SelectAll_Checked" Unchecked="Browse_SelectAll_Checked"/>
+                            </Grid>
+                            
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" >
+                            <TextBlock Margin="2" Padding="5" Text="Preview" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+                            <TextBox Name="Preview_Box" Background="White" Margin="10 2" Height="300" IsReadOnly="True">
+
+                            </TextBox>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Margin="5 8 5 8" Padding="10 1" Name="GenerateButton" IsEnabled="False" HorizontalAlignment="Right" Grid.Column="0" Click="GenerateButton_Click" Visibility="Hidden">Generate</Button>
+                                <Button Margin="5 8 5 8" Padding="10 1" Name="PreviewButton" IsEnabled="False" HorizontalAlignment="Left" Grid.Column="1" Click="PreviewButton_Click" Visibility="Hidden">Preview</Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+           
+            
+            
+
+        </StackPanel>
+    </Border>
+</Window>

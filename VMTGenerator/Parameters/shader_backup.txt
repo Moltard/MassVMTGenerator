@@ -1,0 +1,15 @@
+﻿[
+    "LightmappedGeneric", 
+    "UnlitGeneric", 
+    "VertexLitGeneric", 
+    "LightmappedReflective", 
+    "LightmappedTwoTexture", 
+    "Lightmapped_4WayBlend", 
+    "UnlitTwoTexture", 
+    "Water", 
+    "WorldTwoTextureBlend", 
+    "WorldVertexTransition", 
+    "Refract", 
+    "Eyeball", 
+    "EyeRefract"
+]
