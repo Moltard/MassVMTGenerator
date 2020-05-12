@@ -4,7 +4,7 @@ A clean GUI tool that generate VMTs files for each VTF of a folder.
 
 <img src="Images/MainMenu.jpg" width="60%" />
 
-The tool design is based on **Pretador's VMT Generator** ( https://gamebanana.com/tools/5568 ) which had issue starting.
+The tool design is based on **Pretador's VMT Generator** ( https://gamebanana.com/tools/5568 ) which had issues launching.
 
 ## Downloads
 
