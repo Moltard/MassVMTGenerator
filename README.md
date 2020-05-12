@@ -6,7 +6,7 @@ A clean GUI tool that generate VMTs files for each VTF of a folder.
 
 The tool design is based on **Pretador's VMT Generator** ( https://gamebanana.com/tools/5568 ) which had issues launching.
 
-## Downloads
+## Download
 
 [MassVMTGenerator v1.1](https://github.com/Moltard/MassVMTGenerator/releases/latest)
 
