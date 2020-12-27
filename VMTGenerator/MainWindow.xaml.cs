@@ -24,14 +24,16 @@ namespace VMTGenerator
     public partial class MainWindow : Window
     {
 
+        #region Attributes
+
         /// <summary>
         /// Store the path to the VTF files
         /// </summary>
-        private static string OutputPath = string.Empty;
+        private static string outputPath = string.Empty;
 
-        //--------------------------------------
-        //------------- Init GUI ---------------
-        //--------------------------------------
+        #endregion
+
+        #region Constructor
 
         public MainWindow()
         {
@@ -42,9 +44,63 @@ namespace VMTGenerator
             InitParameters();
         }
 
-        //--------------------------------------
-        //---------- Init JSON Folder ----------
-        //--------------------------------------
+        #endregion
+
+        #region Methods - Create Elements
+
+        /// <summary>
+        /// Create a new ComboBoxItem with the default string "---"
+        /// </summary>
+        /// <returns></returns>
+        private static ComboBoxItem GetNewComboBoxItem()
+        {
+            return GetNewComboBoxItem("---");
+        }
+
+        /// <summary>
+        /// Create a new ComboBoxItem with the given string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private static ComboBoxItem GetNewComboBoxItem(string text)
+        {
+            return new ComboBoxItem
+            {
+                Content = text
+            };
+        }
+
+        /// <summary>
+        /// Create a new TextBlock with the given string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private static TextBlock GetNewTextBlock(string text)
+        {
+            return new TextBlock
+            {
+                Text = text
+            };
+        }
+
+        /// <summary>
+        /// Create a new CheckBox with the given object
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private static CheckBox GetNewCheckBox(object content)
+        {
+            return new CheckBox
+            {
+                Content = content
+            };
+        }
+
+        #endregion
+
+        #region Initialize GUI
+
+        #region Initialize GUI - Json Directory
 
         /// <summary>
         /// Verify if the "Parameters/" directory exists and create it if needed
@@ -54,62 +110,54 @@ namespace VMTGenerator
             JsonUtils.CreateJsonDirectory();
         }
 
-        //--------------------------------------
-        //------------ Init Shader -------------
-        //--------------------------------------
+        #endregion
+
+        #region Initialize GUI - Shader
 
         /// <summary>
         /// Read shader.json and store the data in the Shader ComboBox
         /// </summary>
         private void InitShader()
         {
+            ShaderSelectBox.Items.Add(GetNewComboBoxItem());
             ShaderSelectBox.SelectedIndex = 0;
 
             string jsonText = JsonUtils.ReadJson(JsonFileEnum.Shader);
             if (jsonText != null)
             {
                 List<string> valueList = JsonUtils.DeserializeArray(jsonText);
-
                 foreach (string value in valueList)
                 {
-                    ComboBoxItem cbi = new ComboBoxItem
-                    {
-                        Content = value
-                    };
-                    ShaderSelectBox.Items.Add(cbi);
+                    ShaderSelectBox.Items.Add(GetNewComboBoxItem(value));
                 }
             }
         }
 
-        //--------------------------------------
-        //---------- Init SurfaceProp ----------
-        //--------------------------------------
+        #endregion
+
+        #region Initialize GUI - SurfaceProp
 
         /// <summary>
         /// Read surfaceprop.json and store the data in the SurfaceProp ComboBox
         /// </summary>
         private void InitSurfaceProp()
         {
+            SurfacePropSelectBox.Items.Add(GetNewComboBoxItem());
             SurfacePropSelectBox.SelectedIndex = 0;
             string jsonText = JsonUtils.ReadJson(JsonFileEnum.SurfaceProp);
             if (jsonText != null)
             {
                 List<string> valueList = JsonUtils.DeserializeArray(jsonText);
-
                 foreach (string value in valueList)
                 {
-                    ComboBoxItem cbi = new ComboBoxItem
-                    {
-                        Content = value
-                    };
-                    SurfacePropSelectBox.Items.Add(cbi);
+                    SurfacePropSelectBox.Items.Add(GetNewComboBoxItem(value));
                 }
             }
         }
 
-        //--------------------------------------
-        //---------- Init Parameters -----------
-        //--------------------------------------
+        #endregion
+
+        #region Initialize GUI - Parameters
 
         /// <summary>
         /// Read parameters.json and store the data in the Parameter list
@@ -120,25 +168,19 @@ namespace VMTGenerator
             if (jsonText != null)
             {
                 List<string> valueList = JsonUtils.DeserializeArray(jsonText);
-
                 foreach (string value in valueList)
                 {
-                    TextBlock tbk = new TextBlock
-                    {
-                        Text = value
-                    };
-                    CheckBox cbx = new CheckBox
-                    {
-                        Content = tbk
-                    };
+                    CheckBox cbx = GetNewCheckBox(GetNewTextBlock(value));
                     Parameters_CheckBox.Children.Add(cbx);
                 }
             }
         }
 
-        //--------------------------------------
-        //------------- VMT Data ---------------
-        //--------------------------------------
+        #endregion
+
+        #endregion
+
+        #region Methods - VMT Data
 
         /// <summary>
         /// Get the selected shader
@@ -147,6 +189,7 @@ namespace VMTGenerator
         private string GetShader()
         {
             string shader = string.Empty;
+            // Ignoring the first Element of the list which isnt a Shader
             if (ShaderSelectBox.SelectedIndex > 0)
             {
                 shader = (string)((ComboBoxItem)ShaderSelectBox.SelectedValue).Content;
@@ -178,7 +221,7 @@ namespace VMTGenerator
         /// Get the list of all selected VTF files
         /// </summary>
         /// <returns></returns>
-        private List<string> GetVTFsList()
+        private List<string> GetSelectedVTFsList()
         {
             List<string> vtfsList = new List<string>();
             foreach (ListBoxItem item in VTF_ListBox.SelectedItems)
@@ -196,29 +239,33 @@ namespace VMTGenerator
         private List<KeyValuePair<string, string>> GetParameters()
         {
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>();
-            
+            // Ignoring the first Element of the list which isnt a SurfaceProp
             if (SurfacePropSelectBox.SelectedIndex > 0)
             {
                 string surfaceProp = (string)((ComboBoxItem)SurfacePropSelectBox.SelectedValue).Content;
                 parameters.Add(new KeyValuePair<string, string>(VMTUtils.KeySurfaceProp, surfaceProp));
             }
-
-            try
+            foreach (CheckBox cbx in Parameters_CheckBox.Children)
             {
-                foreach (CheckBox cbx in Parameters_CheckBox.Children)
+                if (cbx.IsChecked == true)
                 {
-                    if ((bool)cbx.IsChecked)
-                    {
-                        string keyParameter = ((TextBlock)cbx.Content).Text;
-                        parameters.Add(new KeyValuePair<string, string>(keyParameter, VMTUtils.ValueParameter));
-                    }
+                    string keyParameter = ((TextBlock)cbx.Content).Text;
+                    parameters.Add(GetParameter(keyParameter));
                 }
             }
-            catch { }
             return parameters;
 
         }
 
+        /// <summary>
+        /// Get a KeyValuePair for a given parameter
+        /// </summary>
+        /// <param name="keyParameter"></param>
+        /// <returns></returns>
+        private KeyValuePair<string, string> GetParameter(string keyParameter)
+        {
+            return new KeyValuePair<string, string>(keyParameter, VMTUtils.ValueParameter);
+        }
 
         /// <summary>
         /// Store the selected options into a <see cref="VMTProperties"/> class
@@ -231,15 +278,13 @@ namespace VMTGenerator
                 Shader = GetShader(),
                 BaseTexture = GetBaseTexture(),
                 ParametersList = GetParameters()
-
             };
             return vmt;
         }
 
+        #endregion
 
-        //--------------------------------------
-        //------------ UI Handlers -------------
-        //--------------------------------------
+        #region GUI Handlers
 
         /// <summary>
         /// Check the 'Select All' checkbox
@@ -309,7 +354,6 @@ namespace VMTGenerator
             PreviewButton.IsEnabled = true;
         }
 
-
         /// <summary>
         /// Make Visible or Hide the Preview and Generate buttons depending if at least 1 VTF is selected
         /// </summary>
@@ -342,10 +386,9 @@ namespace VMTGenerator
             }
         }
 
-        //--------------------------------------
-        //------------ Drag & Drop -------------
-        //--------------------------------------
+        #endregion
 
+        #region Events Drag and Drop
 
         /// <summary>
         /// Get the list of drag and dropped files
@@ -382,7 +425,7 @@ namespace VMTGenerator
                     }
                     else if (System.IO.File.Exists(path))
                     {
-                        directory = FilesUtils.GetDirectoryName(path);
+                        directory = System.IO.Path.GetDirectoryName(path);
                         break;
                     }
                 }
@@ -390,15 +433,15 @@ namespace VMTGenerator
             return directory;
         }
 
-        //--------------------------------------
-        //------------- VTFs List --------------
-        //--------------------------------------
+        #endregion
+
+        #region Events VTFs List
 
         /// <summary>
         /// Load the VTF files in the given directory and add them to the list
         /// </summary>
         /// <param name="directory"></param>
-        private void BrowseDirectory(string directory)
+        private void BrowseVTFDirectory(string directory)
         {
             if (directory != null)
             {
@@ -411,7 +454,7 @@ namespace VMTGenerator
                 {
                     if (System.IO.Path.IsPathRooted(directory))
                     {
-                        string[] vtfsList = FilesUtils.GetFiles(directory, VMTUtils.ExtensionsVTF);
+                        string[] vtfsList = FilesUtils.TryGetFilesDirectory(directory, VMTUtils.ExtensionsVTF);
                         if (vtfsList != null)
                         {
                             foreach (string vtfFile in vtfsList)
@@ -422,7 +465,7 @@ namespace VMTGenerator
                                 };
                                 VTF_ListBox.Items.Add(lbi);
                             }
-                            OutputPath = directory;
+                            outputPath = directory;
                             UpdateVisibility_Buttons();
                         }
                     }
@@ -438,7 +481,7 @@ namespace VMTGenerator
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             string directory = FilesUtils.OpenFolderDialog();
-            BrowseDirectory(directory);
+            BrowseVTFDirectory(directory);
         }
 
         /// <summary>
@@ -449,7 +492,7 @@ namespace VMTGenerator
         private void VTF_ListBox_Drop(object sender, DragEventArgs e)
         {
             string directory = GetDroppedDirectoryName(DragDropGetPaths(e));
-            BrowseDirectory(directory);
+            BrowseVTFDirectory(directory);
         }
 
         /// <summary>
@@ -469,7 +512,7 @@ namespace VMTGenerator
         /// <param name="e"></param>
         private void Browse_SelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            bool isChecked = (bool)Browse_SelectAll.IsChecked;
+            bool isChecked = Browse_SelectAll.IsChecked == true;
             if (isChecked)
             {
                 foreach (ListBoxItem lbi in VTF_ListBox.Items)
@@ -487,10 +530,10 @@ namespace VMTGenerator
             }
         }
 
-        //--------------------------------------
-        //--------- Preview & Generate ---------
-        //--------------------------------------
+        #endregion
 
+        #region Events Preview & Generate
+        
         /// <summary>
         /// Event Handler for the Preview Button
         /// </summary>
@@ -519,11 +562,12 @@ namespace VMTGenerator
         /// <param name="e"></param>
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            VMTGeneratorData vmtGenerator = new VMTGeneratorData(OutputPath, GetVTFsList(), GetVMTData());
+            VMTGeneratorData vmtGenerator = new VMTGeneratorData(outputPath, GetSelectedVTFsList(), GetVMTData());
             vmtGenerator.GenerateVMTs();
             Logs_Box.Text = vmtGenerator.Logs;
         }
 
-        
+        #endregion
+
     }
 }

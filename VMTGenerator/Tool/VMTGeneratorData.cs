@@ -35,16 +35,16 @@ namespace VMTGenerator.Tool
         private string GenerateVMT(string vtfName)
         {
             StringBuilder sb = new StringBuilder();
-            string vmtPath = VMTUtils.GetVMTFilePath(OutputPath, vtfName);
-            try
+            string vmtFilePath = VMTUtils.GetVMTFilePath(OutputPath, vtfName);
+            string vmtString = VMTUtils.GetVMTString(VMTData, vtfName);
+            bool success = FilesUtils.TryWriteAllText(vmtFilePath, vmtString);
+            if (success)
             {
-                string vmtString = VMTUtils.GetVMTString(VMTData, vtfName);
-                System.IO.File.WriteAllText(vmtPath, vmtString);
-                sb.AppendFormat("Generated {0}.vmt in \"{1}\"", vtfName, OutputPath);
+                sb.Append($"Generated {vtfName}.vmt in \"{OutputPath}\"");
             }
-            catch
+            else
             {
-                sb.AppendFormat("Unable to create {0}.vmt in \"{1}\"", vtfName, OutputPath);
+                sb.Append($"Unable to create {vtfName}.vmt in \"{OutputPath}\"");
             }
             sb.AppendLine();
             return sb.ToString();

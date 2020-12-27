@@ -27,7 +27,7 @@ namespace VMTGenerator.Tool.Utils
         /// <returns></returns>
         public static string GetKeyValueLine(string key, string value, string indent = "")
         {
-            return string.Format("{0}\"{1}\" \"{2}\"", indent, key, value);
+            return $"{indent}\"{key}\" \"{value}\"";
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace VMTGenerator.Tool.Utils
         /// <returns></returns>
         public static string GetKeyLine(string key, string indent = "")
         {
-            return string.Format("{0}\"{1}\"", indent, key);
+            return $"{indent}\"{key}\"";
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace VMTGenerator.Tool.Utils
         /// <returns></returns>
         public static string GetLine(string str, string indent = "")
         {
-            return string.Format("{0}{1}", indent, str);
+            return indent + str;
         }
 
         /// <summary>
@@ -60,10 +60,10 @@ namespace VMTGenerator.Tool.Utils
         /// <returns>The VMT content</returns>
         public static string GetVMTString(VMTProperties vmt, string vtfName)
         {
-            string vtfPath = vmt.BaseTexture + vtfName;
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(GetKeyLine(vmt.Shader));
-            sb.AppendLine(GetLine(CurlyBracketOpen));   
+            sb.AppendLine(GetLine(CurlyBracketOpen));
+            string vtfPath = vmt.BaseTexture + vtfName;
             sb.AppendLine(GetKeyValueLine(KeyBaseTexture, vtfPath, DefaultIndent));
             foreach (KeyValuePair<string, string> item in vmt.ParametersList)
             {

@@ -3,111 +3,157 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:VMTGenerator"
         mc:Ignorable="d"
-        Title="Moltard's Mass VMT Generator"  Height="500" Width="800" Icon="icon.ico"
+        Title="Moltard's Mass VMT Generator" Height="500" Width="800" Icon="icon.ico"
         MinHeight="500" MinWidth="800">
-    <Border Name="App_Background" Padding="2" Background="LightGray">
 
-        <StackPanel>
+    <Window.Resources>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+        <!--#region Strings-->
 
-                <StackPanel Grid.Column="1">
-                    <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="Parameters" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                    <ScrollViewer Margin="5" Height="220">
-                        <StackPanel Name="Parameters_CheckBox">
-                        </StackPanel>
-                    </ScrollViewer>
-                    <TextBlock Margin="3" Padding="5" Text="Logs" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
-                    <TextBox Name="Logs_Box" Background="White" Margin="10 2" Height="120" FontSize="9" IsReadOnly="True" TextWrapping="Wrap"/>
-                </StackPanel>
+        <!--#region Strings - Labels-->
 
-                <StackPanel Grid.Column="0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+        <sys:String x:Key="TextLabelTextureShader">Texture Shader</sys:String>
+        <sys:String x:Key="TextLabelSurfaceProp">SurfaceProp</sys:String>
+        <sys:String x:Key="TextLabelBaseTexture">BaseTexturePath</sys:String>
+        <sys:String x:Key="TextLabelParameters">Parameters</sys:String>
+        <sys:String x:Key="TextLabelVTFFiles">VTF Files</sys:String>
+        <sys:String x:Key="TextLabelPreview">Preview</sys:String>
+        <sys:String x:Key="TextLabelLogs">Logs</sys:String>
+        <sys:String x:Key="TextLabelButtonBrowse">Browse</sys:String>
+        <sys:String x:Key="TextLabelButtonGenerate">Generate</sys:String>
+        <sys:String x:Key="TextLabelButtonPreview">Preview</sys:String>
+        <sys:String x:Key="TextTooltipSelectAll">Select All VTFs</sys:String>
 
-                        <Grid Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="8*"/>
-                            </Grid.ColumnDefinitions>
+        <!--#endregion-->
+        
+        <!--#endregion-->
 
-                            <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="Texture Shader" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                            <ComboBox Margin="10 10" Name="ShaderSelectBox" Grid.Column="1">
-                                <ComboBoxItem>---</ComboBoxItem>
-                            </ComboBox>
-                        </Grid>
+        <!--#region Other-->
 
-                        <Grid Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
+        <!-- Visible / Hidden / Collapsed-->
+        <Visibility x:Key="ButtonStaticVisibility">Hidden</Visibility>
 
-                            <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="SurfaceProp" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                            <ComboBox Margin="10 10" Name="SurfacePropSelectBox" Grid.Column="1">
-                                <ComboBoxItem>---</ComboBoxItem>
-                            </ComboBox>
-                        </Grid>
-                    </Grid>
+        <!--#endregion-->
+        
+    </Window.Resources>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="8*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="5" Padding="5" TextWrapping="Wrap" Text="BaseTexture Path" Grid.Column="0" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                        <TextBox Margin="5 5 10 5" Name="BaseTexture_TextBox" VerticalContentAlignment="Center"  Grid.Column="1"></TextBox>
-                    </Grid>
+    <Border Style="{StaticResource ToolMainBorderStyle}">
 
-                    <Grid Margin="0 10 0 0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="9*" />
+                    <RowDefinition Height="1*" />
+                    <!--13* Total-->
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="8*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{StaticResource TextLabelTextureShader}" Style="{StaticResource ToolLabels}"/>
+                    <ComboBox Grid.Column="1" Name="ShaderSelectBox" Style="{StaticResource ToolComboBox}"/>
+                    <TextBlock Grid.Column="2" Text="{StaticResource TextLabelSurfaceProp}" Style="{StaticResource ToolLabels}"/>
+                    <ComboBox Grid.Column="3" Name="SurfacePropSelectBox" Style="{StaticResource ToolComboBox}"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{StaticResource TextLabelBaseTexture}" Style="{StaticResource ToolLabels}"/>
+                    <TextBox Grid.Column="1" Name="BaseTexture_TextBox" Style="{StaticResource ToolBaseTextureBox}"/>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{StaticResource TextLabelVTFFiles}" Style="{StaticResource ToolLabels}"/>
+                    <TextBlock Grid.Column="1" Text="{StaticResource TextLabelPreview}" Style="{StaticResource ToolLabels}"/>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox Grid.Column="0" Name="VTF_ListBox" Style="{StaticResource ToolListBox}"
+                                     SelectionMode="Extended" SelectionChanged="VTF_ListBox_SelectionChanged"
+                                     AllowDrop="True" Drop="VTF_ListBox_Drop" />
+                    <TextBox Grid.Column="1" Name="Preview_Box" Style="{StaticResource ToolPreviewBox}" IsReadOnly="True"/>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="9*"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" >
-                            <TextBlock Margin="5 2" Padding="5" TextWrapping="Wrap" Text="VTF Files" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                            <ListBox Margin="10 2" Background="White" Height="300" Name="VTF_ListBox" SelectionMode="Extended" SelectionChanged="VTF_ListBox_SelectionChanged"
-                                     AllowDrop="True" Drop="VTF_ListBox_Drop" >
-                            </ListBox>
-
-                            <Grid  Margin="10 8 10 8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Padding="10 1" HorizontalAlignment="Right" Click="BrowseButton_Click">Browse</Button>
-                                <CheckBox Grid.Column="1" Margin="2 0" HorizontalAlignment="Center" Name="Browse_SelectAll" VerticalAlignment="Center" ToolTip="Select All VTFs" IsEnabled="False" Checked="Browse_SelectAll_Checked" Unchecked="Browse_SelectAll_Checked"/>
-                            </Grid>
-
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" >
-                            <TextBlock Margin="2" Padding="5" Text="Preview" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-                            <TextBox Name="Preview_Box" Background="White" Margin="10 2" Height="300" IsReadOnly="True">
-
-                            </TextBox>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Margin="5 8 5 8" Padding="10 1" Name="GenerateButton" IsEnabled="False" HorizontalAlignment="Right" Grid.Column="0" Click="GenerateButton_Click" Visibility="Hidden">Generate</Button>
-                                <Button Margin="5 8 5 8" Padding="10 1" Name="PreviewButton" IsEnabled="False" HorizontalAlignment="Left" Grid.Column="1" Click="PreviewButton_Click" Visibility="Hidden">Preview</Button>
-                            </Grid>
-                        </StackPanel>
+                        <Button Grid.Column="0" Name="BrowseButton" Style="{StaticResource ToolButtonRight}" Click="BrowseButton_Click">
+                            <TextBlock Text="{StaticResource TextLabelButtonBrowse}"/>
+                        </Button>
+                        <CheckBox Grid.Column="1" Name="Browse_SelectAll" Style="{StaticResource ToolCheckBox}"
+                                      ToolTip="{StaticResource TextTooltipSelectAll}" IsEnabled="False" 
+                                      Checked="Browse_SelectAll_Checked" Unchecked="Browse_SelectAll_Checked"/>
                     </Grid>
-                </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Name="GenerateButton" IsEnabled="False" Style="{StaticResource ToolButtonRight}"
+                                 Click="GenerateButton_Click" Visibility="{StaticResource ButtonStaticVisibility}">
+                            <TextBlock Text="{StaticResource TextLabelButtonGenerate}"/>
+                        </Button>
+                        <Button Grid.Column="1" Name="PreviewButton" IsEnabled="False" Style="{StaticResource ToolButtonLeft}"
+                                Click="PreviewButton_Click" Visibility="{StaticResource ButtonStaticVisibility}">
+                            <TextBlock Text="{StaticResource TextLabelButtonPreview}"/>
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
-        </StackPanel>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="1*" />
+                    <!--13* Total-->
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="{StaticResource TextLabelParameters}" Style="{StaticResource ToolLabels}"/>
+                <Rectangle Grid.Row="1" Style="{StaticResource ToolRectangle}"/>
+                <ScrollViewer Grid.Row="1" Style="{StaticResource ToolScrollviewer}">
+                    <StackPanel Name="Parameters_CheckBox" />
+                </ScrollViewer>
+                <TextBlock Grid.Row="2" Text="{StaticResource TextLabelLogs}" Style="{StaticResource ToolLabels}"/>
+                <TextBox Grid.Row="3" Name="Logs_Box" Style="{StaticResource ToolLogBox}" IsReadOnly="True"/>
+            </Grid>
+        </Grid>
     </Border>
 </Window>

@@ -27,7 +27,7 @@ namespace VMTGenerator.Tool.Utils
         {
             if (!System.IO.Directory.Exists(DirectoryJson))
             {
-                FilesUtils.CreateDirectory(DirectoryJson);
+                FilesUtils.TryCreateDirectory(DirectoryJson);
             }
         }
 
@@ -62,13 +62,13 @@ namespace VMTGenerator.Tool.Utils
             if (System.IO.File.Exists(jsonFile))
             {
                 // If the json file exists, we read it
-                jsonText = FilesUtils.ReadAllText(jsonFile);
+                jsonText = FilesUtils.TryReadAllText(jsonFile);
             }
             else
             {
                 // Otherwise we read the embedded file and then create the json
                 jsonText = FilesUtils.ReadResourceFile(jsonBackup);
-                FilesUtils.WriteAllText(jsonFile, jsonText);
+                FilesUtils.TryWriteAllText(jsonFile, jsonText);
             }
             return jsonText;
         }

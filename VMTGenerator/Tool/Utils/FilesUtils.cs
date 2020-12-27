@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,6 @@ namespace VMTGenerator.Tool.Utils
     {
 
         private const string FolderSelection = "[Folder Selection]";
-
 
         /// <summary>
         /// Read contents of an embedded resource file
@@ -34,7 +32,7 @@ namespace VMTGenerator.Tool.Utils
         /// <param name="directory">Path to the directory</param>
         /// <param name="pattern">Pattern of the files</param>
         /// <returns>Returns the list of all files in that directory, null if error</returns>
-        public static string[] GetFiles(string directory, string pattern)
+        public static string[] TryGetFilesDirectory(string directory, string pattern)
         {
             try
             {
@@ -49,12 +47,14 @@ namespace VMTGenerator.Tool.Utils
         /// </summary>
         /// <param name="path">Path to the file</param>
         /// <param name="text">Content of the file</param>
-        public static void WriteAllText(string path, string text)
+        public static bool TryWriteAllText(string path, string text)
         {
             try
             {
                 System.IO.File.WriteAllText(path, text);
+                return true;
             } catch {}
+            return false;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace VMTGenerator.Tool.Utils
         /// </summary>
         /// <param name="path">Path to the file</param>
         /// <returns>Returns the content of the file or null if there is an error</returns>
-        public static string ReadAllText(string path)
+        public static string TryReadAllText(string path)
         {
             try
             {
@@ -89,17 +89,18 @@ namespace VMTGenerator.Tool.Utils
         }
 
         /// <summary>
-        /// Create a directory at the given path
+        /// Try to create a directory at the given path
         /// </summary>
         /// <param name="path"></param>
-        public static void CreateDirectory(string path)
+        public static bool TryCreateDirectory(string path)
         {
             try
             {
                 System.IO.Directory.CreateDirectory(path);
+                return true;
             }
             catch { }
-            
+            return false;
         }
 
         /// <summary>

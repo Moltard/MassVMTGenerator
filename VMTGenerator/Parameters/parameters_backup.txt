@@ -12,5 +12,6 @@
     "$no_draw", 
     "$no_fullbright", 
     "$additive", 
-    "$selfillum"
+    "$selfillum",
+	"%compilenonsolid"
 ]

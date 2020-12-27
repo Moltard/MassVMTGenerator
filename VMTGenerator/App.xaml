@@ -4,6 +4,104 @@
              xmlns:local="clr-namespace:VMTGenerator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <!--#region Properties GUI-->
+
+        <SolidColorBrush x:Key="BG_Color" Color="LightGray" />
+        <Thickness x:Key="BorderPadding">2</Thickness>
+
+        <Thickness x:Key="MarginBigBox" Left="10" Top="5" Right="10" Bottom="0"/>
+        <Thickness x:Key="MarginBaseTexture" Left="10" Top="5" Right="10" Bottom="5"/>
+        <Thickness x:Key="MarginCombobox" Left="10" Top="7.5" Right="10" Bottom="7.5"/>
+
+        <!--#endregion-->
+        
+        <!--#region Style GUI - Elements-->
+
+        <Style TargetType="Border" x:Key="ToolMainBorderStyle">
+            <Setter Property="Padding" Value="{StaticResource BorderPadding}"/>
+            <Setter Property="Background" Value="{StaticResource BG_Color}"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="ToolLabels">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ToolBaseButtons">
+            <Setter Property="Margin" Value="5 8"/>
+            <Setter Property="Padding" Value="10 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ToolButtonLeft" BasedOn="{StaticResource ToolBaseButtons}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        
+        <Style TargetType="Button" x:Key="ToolButtonRight" BasedOn="{StaticResource ToolBaseButtons}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        
+        <Style TargetType="ComboBox" x:Key="ToolComboBox">
+            <Setter Property="Margin" Value="{StaticResource MarginCombobox}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="TextBox" x:Key="ToolBaseTextureBox">
+            <Setter Property="Margin" Value="{StaticResource MarginBaseTexture}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinHeight" Value="25"/>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="ToolCheckBox">
+            <Setter Property="Margin" Value="10 0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="Rectangle" x:Key="ToolRectangle">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Fill" Value="White"/>
+            <Setter Property="Stroke" Value="{StaticResource BG_Color}"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="RadiusX" Value="5"/>
+            <Setter Property="RadiusY" Value="5"/>
+        </Style>
+
+        <Style TargetType="ScrollViewer" x:Key="ToolScrollviewer">
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="ToolPreviewBox">
+            <Setter Property="Margin" Value="{StaticResource MarginBigBox}"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="ToolLogBox">
+            <Setter Property="Margin" Value="{StaticResource MarginBigBox}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style TargetType="ListBox" x:Key="ToolListBox">
+            <Setter Property="Margin" Value="{StaticResource MarginBigBox}"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <!--#endregion-->
+
     </Application.Resources>
 </Application>
